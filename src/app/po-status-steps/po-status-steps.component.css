@@ -1,0 +1,85 @@
+ul.my-activity-bar
+{
+  padding-left: 0px
+}
+
+ul.my-activity-bar li
+{
+  list-style: none;
+  display: inline-block;
+  width: 16%;
+  text-align: center;
+  color: #838383;
+  font-weight: bold;
+  position: relative;
+  margin-right: -4px;
+}
+
+ul.my-activity-bar li h5
+{
+  margin-bottom: 8px;
+}
+
+ul.my-activity-bar br+span
+{
+  font-size: 12px
+}
+
+ul.my-activity-bar li h5 span
+{
+  border: 2px #838383 solid;
+  border-radius: 100px;
+  padding: 5px;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+}
+
+ul.my-activity-bar li.active
+{
+  color: #000;
+}
+
+ul.my-activity-bar li.active h5 span
+{
+  border: 2px #000 solid;
+}
+
+ul.my-activity-bar li h5 span.icon , ul.my-activity-bar li.active h5 span.number
+{
+  display: none;
+}
+
+ul.my-activity-bar li.active h5 span.icon
+{
+  display: inline-block;
+  border-color: #00bddd;
+  color: #00bddd
+}
+
+ul.my-activity-bar li .line
+{
+  display: none;
+  position: absolute;
+  height: 2px;
+  background-color: #00bddd;
+}
+
+ul.my-activity-bar li .line.right
+{
+  width: 63px;
+  right: 0px;
+  top: 30px;
+}
+
+ul.my-activity-bar li .line.left
+{
+  width: 63px;
+  left: 0px;
+  top: 30px;
+}
+
+ul.my-activity-bar li.active .line
+{
+  display: block;
+}

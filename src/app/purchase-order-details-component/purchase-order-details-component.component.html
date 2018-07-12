@@ -1,0 +1,177 @@
+<div *ngIf="(PurchaseOrderDetails | json ) == '{}'">
+  <div class="loader" style="padding-top: 0px; position:relative">
+    <div class="loader-inner ball-pulse">
+      <div class="my-loader"></div>
+      <div class="my-loader"></div>
+      <div class="my-loader"></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="(PurchaseOrderDetails | json ) != '{}'">
+  <!-- <div class="">
+    <b>Order Status - </b>
+    <span *ngIf="PurchaseOrderDetails.orderStatus == 0">Design Pending</span>
+    <span *ngIf="PurchaseOrderDetails.orderStatus == 1">Submitted for Design</span>
+    <span *ngIf="PurchaseOrderDetails.orderStatus == 2">Design In progress</span>
+    <span *ngIf="PurchaseOrderDetails.orderStatus == 3">Design Done, Approve</span>
+    <span *ngIf="PurchaseOrderDetails.orderStatus == 4">Submit for Production</span>
+    <span *ngIf="PurchaseOrderDetails.orderStatus == 5">Submitted for Production</span>
+    <span *ngIf="PurchaseOrderDetails.orderStatus == 6">Production In Progress</span>
+    <span *ngIf="PurchaseOrderDetails.orderStatus >= 7">Production Completed</span>
+  </div> -->
+
+  <div class="" style="padding: 25px 0">
+    <app-po-status-steps [orderid]="orderid"></app-po-status-steps>
+  </div>
+
+  <div class="col-md-4">
+    <div class="">
+      <b>PO ID - </b>
+      <span>
+        {{PurchaseOrderDetails.orderNumber}}
+      </span>
+    </div>
+    <div class="">
+      <b>Order Due Date - </b>
+      <span>
+        {{PurchaseOrderDetails.orderDueDate}}
+      </span>
+    </div>
+    <div class="">
+      <b>Order Received Date - </b>
+      <span>
+        {{PurchaseOrderDetails.orderCreated}}
+      </span>
+    </div>
+    <div class="">
+      <b>Delivery Address - </b>
+      <span>
+        {{PurchaseOrderDetails.orderDeliveryAddress}}
+      </span>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="">
+      <b>Client Name - </b>
+      <span>
+        {{PurchaseOrderDetails.clientFirstName}} {{PurchaseOrderDetails.clientLastName}}
+      </span>
+    </div>
+    <div class="">
+      <b>Phone Number - </b>
+      <span>
+        {{PurchaseOrderDetails.clientTelephone}}
+      </span>
+    </div>
+    <div class="">
+      <b>Email Address - </b>
+      <span>
+        {{PurchaseOrderDetails.clientEmail}}
+      </span>
+    </div>
+    <div class="">
+      <b>Sales Name - </b>
+      <span>
+        {{PurchaseOrderDetails.clientSalesname}}
+      </span>
+    </div>
+  </div>
+
+  <div class="col-md-12" style="margin-top:20px; margin-bottom:20px">
+    <div class="">
+      <b>Order Description - </b>
+      <span>
+        {{PurchaseOrderDetails.orderDescription}}
+      </span>
+    </div>
+  </div>
+
+  <table  class="table table-bordered">
+                                  <tbody ><tr >
+                                    <th  width="90">Item no</th>
+                                    <th  width="160">Item name</th>
+                                    <th >Item description</th>
+                                    <th  width="50">Quantity</th>
+                                    <th  width="120">Unit Price</th>
+                                    <th  width="80">Amount</th>
+                                  </tr>
+                                  </tbody>
+                                  <tbody>
+                                    <tr *ngFor="let item of PurchaseOrderDetails.items">
+                                      <td>{{item.itemNo}}</td>
+                                      <td>{{item.itemName}}</td>
+                                      <td>{{item.itemDescription}}</td>
+                                      <td>{{item.itemQuantity}}</td>
+                                      <td>{{item.itemPrice}}</td>
+                                      <td>{{item.itemAmount}}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+
+</div>
+
+
+
+
+<div class="col-md-6" *ngIf="PurchaseOrderComments.length != 0 && !comentLoading">
+  <label for="">Comments</label>
+  <div class="clearfix">
+
+  </div>
+  <ol class="list-unstyled team-members mylist">
+    <li *ngFor="let comment of PurchaseOrderComments">
+      <div class="row">
+        <!-- <div class="col-xs-3">
+          <div class="avatar">
+            <img src="assets/img/faces/face-0.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+          </div>
+        </div> -->
+        <div class="col-xs-9">
+          {{ comment.pomsgComment }}
+          <br>
+           <ol style="padding-left: 17px;">
+             <li *ngFor="let file of comment.files" style="padding: 2px; border: none;">
+               <a [attr.href]="baseUrl+'api/assets/uploads/files/'+file.filename">
+                 {{ file.filename }}
+               </a>
+             </li>
+           </ol>
+
+          <span class="text-muted"><small>On {{ comment.pomsgDate }}</small></span>
+          <span class="text-muted"><small>By {{ comment.fullName }}</small></span>
+          <br>
+        </div>
+        <!-- <div class="col-xs-3 text-right">
+          <button class="btn btn-sm btn-success btn-icon"><i class="fa fa-envelope"></i></button>
+        </div> -->
+        <div class="clearfix"></div>
+      </div>
+    </li>
+  </ol>
+</div>
+<div class="clearfix">
+</div>
+<div class="col-md-6">
+  <div class="form-group">
+    <textarea name="name" class="form-control border-input" placeholder="Comment" #comment ></textarea>
+    <input #fileInput type="file" (change)="handleFileUpload($event)" style="display:none"/>
+  </div>
+   <div class="form-group">
+     <i *ngIf="showImageUploading == false" hand class="fa fa-paperclip" aria-hidden="true" style="font-size: 17px;" (click)="fileupload()"></i>
+     <i *ngIf="showImageUploading" class="fa fa-refresh fa-spin fa-3x fa-fw" style="font-size: 17px;"></i>
+   </div>
+  <div class="form-group">
+   <ol style="padding-left: 17px;">
+     <li *ngFor="let file of FileNames">
+       <a [attr.href]="baseUrl+'api/assets/uploads/profilePic/'+file">
+         {{ file }}
+       </a>
+     </li>
+   </ol>
+  </div>
+  <div class="form-group">
+    <input type="button" (click)="addPurchaseOrderComments()" value="Add" class="btn btn-primary">
+  </div>
+</div>

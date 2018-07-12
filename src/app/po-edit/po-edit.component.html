@@ -1,0 +1,125 @@
+<form  [formGroup]="poFormEdit" (ngSubmit)="submitForm(poFormEdit.value)">
+    <h5 class="modal-title">Update Purchase Order</h5>
+    <hr style="margin: 10px 0">
+      <!-- <div class="row">
+        <div class="col-md-5">
+          <button type="button" name="button" (click)="clientTypeChange('new')" [class.btn-fill]="clientType == 'new'" class="btn btn-info  btn-wd">New Client</button>
+          <button type="button" name="button" (click)="clientTypeChange('old')" [class.btn-fill]="clientType == 'old'" class="btn btn-info btn-wd">Existing Client</button>
+        </div>
+      </div> -->
+      <div>
+        <div class="row">
+          <!-- <div class="col-md-3">
+              <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls['orderTelephone'].valid   && poFormEditSubmitted}">
+                    <label>Telephone number</label>
+                    <input class="form-control border-input" placeholder="Telephone number" type="text" [formControl]="poFormEdit.controls['orderTelephone']" [(ngModel)]="PurchaseOrderDetails['orderTelephone']">
+                </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls['orderPostal'].valid   && poFormEditSubmitted}">
+                    <label>Postal Code</label>
+                    <input class="form-control border-input" placeholder="ZIP Code" type="number" [formControl]="poFormEdit.controls['orderPostal']" [(ngModel)]="PurchaseOrderDetails['orderPostal']">
+                </div>
+            </div> -->
+            <div class="col-md-3">
+              <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls['orderDueDate'].valid   && poFormEditSubmitted}">
+                    <label>Due Date</label>
+                    <input class="form-control border-input" placeholder="Due Date" type="text" [formControl]="poFormEdit.controls['orderDueDate']" [(ngModel)]="PurchaseOrderDetails['orderDueDate']">
+                </div>
+            </div>
+            <!-- <div class="col-md-3">
+              <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls['orderSalesPerson'].valid   && poFormEditSubmitted}">
+                    <label>Sales Person name</label>
+                    <input class="form-control border-input" placeholder="Sales Person name" type="text" [formControl]="poFormEdit.controls['orderSalesPerson']" [(ngModel)]="PurchaseOrderDetails['orderSalesPerson']">
+                </div>
+            </div> -->
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls['orderDescription'].valid   && poFormEditSubmitted}">
+                    <label>Order Desciption</label>
+                    <textarea rows="3" class="form-control border-input" placeholder="Order Desciption" [formControl]="poFormEdit.controls['orderDescription']" [(ngModel)]="PurchaseOrderDetails['orderDescription']"></textarea>
+                </div>
+                <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls['orderDeliveryAddress'].valid   && poFormEditSubmitted}">
+                    <label>Delivery Address</label>
+                    <textarea rows="3" class="form-control border-input" placeholder="Delivery Address" [formControl]="poFormEdit.controls['orderDeliveryAddress']" [(ngModel)]="PurchaseOrderDetails['orderDeliveryAddress']"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:5px">
+          <div class="col-md-12">
+            <label for="">Order Items</label>
+            <span (click)="addOrderItem()"><i class="ti-plus"></i></span>
+          </div>
+        </div>
+        <div class="row" style="margin-top:5px">
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <tr>
+                <th width="90">Item no</th>
+                <th width="160">Item name</th>
+                <th>Item description</th>
+                <th width="50">Quantity</th>
+                <th width="120">Unit Price</th>
+                <th width="120">Amount</th>
+                <th width="20"></th>
+              </tr>
+              <tbody border="0" formArrayName="items">
+                <tr *ngFor="let item of poFormEdit.controls.items['controls']; let i=index" [formGroupName]="i">
+                <td>
+                  <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls.items.controls[i].controls.itemNo.valid   && poFormEditSubmitted}">
+                        <input class="form-control border-input" placeholder="Item no" type="text" formControlName="itemNo">
+                    </div>
+                </td>
+                <td>
+                  <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls.items.controls[i].controls.itemName.valid   && poFormEditSubmitted}">
+                      <input class="form-control border-input" placeholder="Item name" type="text" formControlName="itemName">
+                    </div>
+                </td>
+                <td>
+                  <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls.items.controls[i].controls.itemDescription.valid   && poFormEditSubmitted}">
+                      <input class="form-control border-input" placeholder="Item description" type="text" formControlName="itemDescription">
+                    </div>
+                </td>
+                <td>
+                  <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls.items.controls[i].controls.itemQuantity.valid   && poFormEditSubmitted}">
+                    <input class="form-control border-input" placeholder="Item Quantity" type="text" formControlName="itemQuantity">
+                    </div>
+                </td>
+                <td>
+                  <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls.items.controls[i].controls.itemPrice.valid   && poFormEditSubmitted}">
+                    <input class="form-control border-input" placeholder="Item Price" type="text" formControlName="itemPrice">
+                    </div>
+                </td>
+                <td>
+                  <div class="form-group"  [ngClass]="{'has-error':!poFormEdit.controls.items.controls[i].controls.itemAmount.valid   && poFormEditSubmitted}">
+                    <input class="form-control border-input" placeholder="Amount" type="text" formControlName="itemAmount">
+                      </div>
+                </td>
+                <td width="20">
+                  <i class="ti-trash" (click)="removeOrderItem(i)" *ngIf="i != 0"></i>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="text-right">
+              <label for="">Order Total - </label>
+              <strong>
+                $<input [attr.disabled]="true" class="border-input" placeholder="0" type="text" [formControl]="poFormEdit.controls['orderTotal']" [(ngModel)]="PurchaseOrderDetails['orderTotal']" style="width:57px; border: none; margin-left:3px; background: none">
+              </strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="clearfix"></div>
+
+<div class="text-right">
+    <button type="submit" class="btn btn-info btn-fill btn-wd">Add Purchase Order</button>
+    <button data-dismiss="modal" type="button" class="btn btn-info btn-wd">Cancel</button>
+</div>
+</form>

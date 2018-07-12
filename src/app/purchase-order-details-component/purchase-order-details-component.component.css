@@ -1,0 +1,15 @@
+ol.mylist li
+{
+  border: 1px #dedede solid;
+  padding: 10px;
+}
+
+ol.mylist li + li
+{
+  margin-top: -1px;
+}
+
+.text-muted
+{
+	color: #777;
+}

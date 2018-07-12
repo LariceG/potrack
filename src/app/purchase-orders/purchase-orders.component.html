@@ -1,0 +1,543 @@
+<toaster-container></toaster-container>
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <div class="main-panel">
+      <app-navbar></app-navbar>
+
+        <div class="content">
+          <div class="container-fluid" style="padding:0px">
+                <div class="row">
+                  <div class="col-md-12" style="margin-bottom:15px" *ngIf="token.userType == 1">
+                    <button data-toggle="modal" data-target="#addPo" type="button" name="button" class="btn btn-info btn-fill btn-wd">Add Purchase Order</button>
+                    <!-- <button data-toggle="modal" data-target="#addCl" type="button" name="button" class="btn btn-info btn-fill btn-wd">Add Client</button> -->
+                  </div>
+                  <div class="col-md-12">
+                      <div class="card">
+                          <div class="header">
+                              <h4 class="title">Purchase Orders</h4>
+                              <!-- <p class="category">Here is a subtitle for this table</p> -->
+                          </div>
+                          <div *ngIf="PurchaseOrdes.length == 0" class="content">
+                            No Records found
+                          </div>
+                          <div class="content table-responsive table-full-width" *ngIf="PurchaseOrdes.length != 0">
+                              <table class="table table-striped">
+                                  <thead>
+                                    <th>PO ID</th>
+                                    <th>Client Name</th>
+                                    <th>Client Pic</th>
+                                    <th>Client Email</th>
+                                    <th>Due Date</th>
+                                    <th>Delivery Address</th>
+                                    <th>Sales Person</th>
+                                    <th>Order Status</th>
+                                    <!-- <th>Action</th> -->
+                                    <th>Action</th>
+                                  </thead>
+                                  <tbody  *ngFor="let po of PurchaseOrdes">
+                                      <tr>
+                                        <td>
+                                          <a [routerLink]="['/purchase-order-details',po.orderId]">
+                                            {{po.orderNumber}}
+                                          </a>
+                                        </td>
+                                        <td>
+                                          <a [routerLink]="['/dashboard/client-profile',po.clientId]">
+                                          {{ po.clientFirstName }} {{ po.clientLastName }}
+                                          </a>
+                                        </td>
+                                        <td>
+                                          <img *ngIf="po.clientPic != ''" [src]="Url+ 'api/assets/uploads/profilePic/' + po.clientPic" alt="" style="width:60px" class="img-thumbnail">
+                                          <img *ngIf="po.clientPic == ''" [src]="'assets/img/demo.png'" alt="" style="width:60px" class="img-thumbnail">
+                                        </td>
+                                        <td>{{po.clientEmail}}</td>
+                                        <td>{{po.orderDueDate}}</td>
+                                        <td>{{po.orderDeliveryAddress}}</td>
+                                        <td>{{po.clientSalesname}}</td>
+                                        <!-- <td>
+                                        </td> -->
+                                        <td>
+                                          <!-- {{ po.orderStatus }} -->
+                                          <button *ngIf="po.orderStatus == 0 && token['userType'] == 1" (click)="ChangePoStatus('confirm',po.orderId,1)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Submit for Design </button>
+                                          <button *ngIf="po.orderStatus == 1 && token['userType'] == 1" [attr.disabled]="true"  (click)="ChangePoStatus('confirm',po.orderId,1)" type="button" name="button" class="btn btn-primary btn-fill btn-wd">Submitted for Design <i class="ti ti-check"></i> </button>
+                                          <button *ngIf="po.orderStatus == 2 && token['userType'] == 1" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Design In progress</button>
+                                          <button *ngIf="po.orderStatus == 3 && token['userType'] == 1" (click)="ChangePoStatus('confirm',po.orderId,4)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Design Done, Approve</button>
+                                          <button *ngIf="po.orderStatus == 4 && token['userType'] == 1" (click)="ChangePoStatus('confirm',po.orderId,5)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Submit for Production</button>
+                                          <button *ngIf="po.orderStatus == 5 && token['userType'] == 1" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Submitted for Production </button>
+                                          <button *ngIf="po.orderStatus == 6 && token['userType'] == 1" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production In Progress</button>
+                                          <button *ngIf="po.orderStatus == 7 && token['userType'] == 1"  (click)="ChangePoStatus('confirm',po.orderId,8)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Complete Payment</button>
+                                          <button *ngIf="po.orderStatus == 8 && token['userType'] == 1" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Shipment pending</button>
+                                          <button *ngIf="po.orderStatus == 9 && token['userType'] == 1" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order shipment Started</button>
+                                          <button *ngIf="po.orderStatus == 10 && token['userType'] == 1" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order Shipped</button>
+
+                                          <button *ngIf="po.orderStatus == 1 && token['userType'] == 2" (click)="ChangePoStatus('confirm',po.orderId,2)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Start Design </button>
+                                          <button *ngIf="po.orderStatus == 2 && token['userType'] == 2" (click)="ChangePoStatus('confirm',po.orderId,3)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Send for review </button>
+                                          <button *ngIf="po.orderStatus == 3 && token['userType'] == 2" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd  btn-fill" style="width: 194px">Sent for review </button>
+                                          <button *ngIf="po.orderStatus >= 4 && token['userType'] == 2" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Approved </button>
+                                          <button *ngIf="po.orderStatus == 5 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,6)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Start Production</button>
+                                          <button *ngIf="po.orderStatus == 6 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,7)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production Complete</button>
+                                          <button *ngIf="po.orderStatus == 7 && token['userType'] == 3" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production Completed</button>
+
+                                          <button *ngIf="po.orderStatus == 8 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,9)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Send for Shipment</button>
+                                          <button *ngIf="po.orderStatus == 9 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,10)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Complete Shipment</button>
+                                          <button *ngIf="po.orderStatus == 10 && token['userType'] == 3" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order shipped</button>
+
+                                        <td>{{po.orderSalesPerson}}</td>
+                                        <td style="padding: 0px; width:100px">
+                                          <button type="button" name="button" class="btn btn-default" (click)="expandPO(po.orderId)" style="padding:0 !important; border:none">
+                                            <i  *ngIf="expandedPo != po.orderId" class="fa fa-angle-double-down" aria-hidden="true"></i>
+                                            <i  *ngIf="expandedPo != '' && expandedPo == po.orderId" class="fa fa-angle-double-up" aria-hidden="true"></i>
+                                          </button>
+                                          <button *ngIf="token['userType'] == 1" type="button" name="button" class="btn btn-default" (click)="deletePoConfirm(po.orderId)"  style="padding:0 !important; border:none">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                          </button>
+                                          <button *ngIf="token['userType'] == 1" type="button" name="button" class="btn btn-default" (click)="editPo(po.orderId)"  style="padding:0 !important; border:none">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                          </button>
+                                        </td>
+                                      </tr>
+                                      <tr *ngIf="expandedPo != '' && expandedPo == po.orderId">
+                                        <td colspan="8">
+                                          <app-purchase-order-details-component [orderid]="po.orderId"></app-purchase-order-details-component>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="modal" id="addPo">
+  <div class="modal-dialog modal-lg" style="width: 90%;">
+    <div class="modal-content">
+      <form  [formGroup]="poForm" (ngSubmit)="submitForm(poForm.value)">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Purchase Order</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-5">
+                <button type="button" name="button" (click)="clientTypeChange('new')" [class.btn-fill]="clientType == 'new'" class="btn btn-info  btn-wd">New Client</button>
+                <button type="button" name="button" (click)="clientTypeChange('old')" [class.btn-fill]="clientType == 'old'" class="btn btn-info btn-wd">Existing Client</button>
+              </div>
+            </div>
+            <div *ngIf="clientType == 'old'" class="row">
+              <div class="col-md-4">
+                  <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientId'].valid   && poFormSubmitted}">
+                      <label>Client</label>
+                      <select class="form-control border-input" [formControl]="poForm.controls['clientId']" (change)="clientChng($event)" [(ngModel)]="oldClient">
+                        <option value="">Select Client</option>
+                        <option [value]="cc.clientId" *ngFor="let cc of Clients">{{cc.clientFirstName}}{{cc.clientLastName}}</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="clearfix">
+
+              </div>
+              <div class="col-md-4" *ngIf="Client != '{}'">
+                <div class="img_brow img-thumbnail">
+                  <img *ngIf="clientPicExist != ''" [src]="Url+ 'api/assets/uploads/profilePic/' + clientPicExist" alt="" class="img-thumbnail">
+                  <img *ngIf="clientPicExist == ''" src="assets/img/demo.png" alt="" class="img-thumbnail">
+                </div>
+              </div>
+            </div>
+            <div *ngIf="clientType == 'new'">
+              <div class="row" style="margin-top:5px">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Client Information</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4">
+                    <div class="img_brow img-thumbnail" *ngIf="!showImageUploading">
+                      <!-- {{ Url  }} -->
+                      <img *ngIf="clientPic != ''" [src]="Url+ 'api/assets/uploads/profilePic/' + clientPic" alt="" class="img-thumbnail">
+                      <img *ngIf="clientPic == ''" src="assets/img/demo.png" alt="" class="img-thumbnail">
+                      <div class="fafa_icon">
+                        <i class="fa fa-camera" aria-hidden="true"></i>
+                        <input #fileInput type="file" (change)="updateProfileimage($event)" accept="image/*" title=" " />
+                      </div>
+                    </div>
+                    <div class="img_brow img-thumbnail imageuploadingLoader" *ngIf="showImageUploading">
+                      <img src="assets/img/loading.gif" alt="" class="img-thumbnail">
+                    </div>
+                  </div>
+                </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientFirstName'].valid   && poFormSubmitted}">
+                          <label>First Name</label>
+                          <input class="form-control border-input" placeholder="Company" type="text" [formControl]="poForm.controls['clientFirstName']">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientLastName'].valid   && poFormSubmitted}">
+                          <label>Last Name</label>
+                          <input class="form-control border-input" placeholder="Last Name" type="text" [formControl]="poForm.controls['clientLastName']">
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientSalesname'].valid   && poFormSubmitted}">
+                          <label>Sales Name</label>
+                          <input class="form-control border-input" placeholder="Sales name" type="text" [formControl]="poForm.controls['clientSalesname']">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label>tag</label>
+                        Google  <input type="radio" formControlName="clientTag" name="clientTag" value="google" [(ngModel)]="clientTag">
+                        Alibaba <input type="radio" formControlName="clientTag" name="clientTag" value="alibaba" [(ngModel)]="clientTag">
+                    </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-5">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientCompany'].valid   && poFormSubmitted}">
+                          <label>Company</label>
+                          <input class="form-control border-input"  placeholder="Company" type="text" [formControl]="poForm.controls['clientCompany']">
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientTelephone'].valid   && poFormSubmitted}">
+                          <label>Telephone number</label>
+                          <input class="form-control border-input" placeholder="Telephone number" type="text" [formControl]="poForm.controls['clientTelephone']">
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientEmail'].valid   && poFormSubmitted}">
+                          <label for="exampleInputEmail1">Email address</label>
+                          <input class="form-control border-input" placeholder="Email" type="email" [formControl]="poForm.controls['clientEmail']">
+                      </div>
+                  </div>
+              </div>
+
+
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientBillingAddress'].valid   && poFormSubmitted}">
+                          <label>Billing Address</label>
+                          <input class="form-control border-input" placeholder="Billing Address" type="text" [formControl]="poForm.controls['clientBillingAddress']">
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientCity'].valid   && poFormSubmitted}">
+                          <label>City</label>
+                          <input class="form-control border-input" placeholder="City" type="text" [formControl]="poForm.controls['clientCity']">
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientCountry'].valid   && poFormSubmitted}">
+                          <label>Country</label>
+                          <input class="form-control border-input" placeholder="Country" type="text" [formControl]="poForm.controls['clientCountry']">
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientPostal'].valid   && poFormSubmitted}">
+                          <label>Postal Code</label>
+                          <input class="form-control border-input" placeholder="ZIP Code" type="number" [formControl]="poForm.controls['clientPostal']">
+                      </div>
+                  </div>
+              </div>
+
+            </div>
+            <div>
+              <div class="row" style="margin-top:5px">
+                <div class="col-md-12">
+                  <label for="">Order Info</label>
+                </div>
+              </div>
+              <div class="row">
+                <!-- <div class="col-md-3">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['orderTelephone'].valid   && poFormSubmitted}">
+                          <label>Telephone number</label>
+                          <input class="form-control border-input" placeholder="Telephone number" type="text" [formControl]="poForm.controls['orderTelephone']">
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['orderPostal'].valid   && poFormSubmitted}">
+                          <label>Postal Code</label>
+                          <input class="form-control border-input" placeholder="ZIP Code" type="number" [formControl]="poForm.controls['orderPostal']">
+                      </div>
+                  </div> -->
+                  <div class="col-md-3">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['orderDueDate'].valid   && poFormSubmitted}">
+                          <label>Due Date</label>
+                          <input class="form-control border-input" placeholder="Due Date" type="text" [formControl]="poForm.controls['orderDueDate']">
+                      </div>
+                  </div>
+                  <!-- <div class="col-md-3">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['orderSalesPerson'].valid   && poFormSubmitted}">
+                          <label>Sales Person name</label>
+                          <input class="form-control border-input" placeholder="Sales Person name" type="text" [formControl]="poForm.controls['orderSalesPerson']">
+                      </div>
+                  </div> -->
+              </div>
+
+
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['orderDescription'].valid   && poFormSubmitted}">
+                          <label>Order Desciption</label>
+                          <textarea rows="3" class="form-control border-input" placeholder="Order Desciption" [formControl]="poForm.controls['orderDescription']"></textarea>
+                      </div>
+                      <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['orderDeliveryAddress'].valid   && poFormSubmitted}">
+                          <label>Delivery Address</label>
+                          <textarea rows="3" class="form-control border-input" placeholder="Delivery Address" [formControl]="poForm.controls['orderDeliveryAddress']"></textarea>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row" style="margin-top:5px">
+                <div class="col-md-12">
+                  <label for="">Order Items</label>
+                  <span (click)="addOrderItem()"><i class="ti-plus"></i></span>
+                </div>
+              </div>
+              <div class="row" style="margin-top:5px">
+                <div class="col-md-12">
+                  <table class="table table-bordered">
+                    <tr>
+                      <th width="90">Item no</th>
+                      <th width="160">Item name</th>
+                      <th>Item description</th>
+                      <th width="50">Quantity</th>
+                      <th width="120">Unit Price</th>
+                      <th width="120">Amount</th>
+                      <th width="20"></th>
+                    </tr>
+                    <tbody border="0" formArrayName="items">
+                      <tr *ngFor="let item of poForm.controls.items['controls']; let i=index" [formGroupName]="i">
+                      <td>
+                        <div class="form-group"  [ngClass]="{'has-error':!poForm.controls.items.controls[i].controls.itemNo.valid   && poFormSubmitted}">
+                              <input class="form-control border-input" placeholder="Item no" type="text" formControlName="itemNo">
+                          </div>
+                      </td>
+                      <td>
+                        <div class="form-group"  [ngClass]="{'has-error':!poForm.controls.items.controls[i].controls.itemName.valid   && poFormSubmitted}">
+                            <input class="form-control border-input" placeholder="Item name" type="text" formControlName="itemName">
+                          </div>
+                      </td>
+                      <td>
+                        <div class="form-group"  [ngClass]="{'has-error':!poForm.controls.items.controls[i].controls.itemDescription.valid   && poFormSubmitted}">
+                            <input class="form-control border-input" placeholder="Item description" type="text" formControlName="itemDescription">
+                          </div>
+                      </td>
+                      <td>
+                        <div class="form-group"  [ngClass]="{'has-error':!poForm.controls.items.controls[i].controls.itemQuantity.valid   && poFormSubmitted}">
+                          <input class="form-control border-input" placeholder="Item Quantity" type="text" formControlName="itemQuantity">
+                          </div>
+                      </td>
+                      <td>
+                        <div class="form-group"  [ngClass]="{'has-error':!poForm.controls.items.controls[i].controls.itemPrice.valid   && poFormSubmitted}">
+                          <input class="form-control border-input" placeholder="Item Price" type="text" formControlName="itemPrice">
+                          </div>
+                      </td>
+                      <td>
+                        <div class="form-group"  [ngClass]="{'has-error':!poForm.controls.items.controls[i].controls.itemAmount.valid   && poFormSubmitted}">
+                          <input class="form-control border-input" placeholder="Amount" type="text" formControlName="itemAmount">
+                            </div>
+                      </td>
+                      <td width="20">
+                        <i class="ti-trash" (click)="removeOrderItem(i)" *ngIf="i != 0"></i>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <div class="text-right">
+                    <label for="">Order Total - </label>
+                    <strong>
+                      $<input [attr.disabled]="true" class="border-input" placeholder="0" type="text" [formControl]="poForm.controls['orderTotal']" style="width:57px; border: none; margin-left:3px; background: none">
+                    </strong>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+      </div>
+      <div class="modal-footer">
+        <div class="text-right">
+            <button type="submit" class="btn btn-info btn-fill btn-wd">Add Purchase Order</button>
+            <button data-dismiss="modal" type="button" class="btn btn-info btn-wd">Cancel</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade delete-modal" role="dialog" id="podeletemodal">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+     <div class="modal-body">
+       <i class="fa fa-times"></i>
+       <h4>Are You sure to delete this order?</h4>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-primary"  (click) = "deletePo()" >Delete</button>
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" role="dialog" id="poeditmodal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div class="modal-body">
+        <app-po-edit *ngIf="poEdit" [poToEdit]="poToEdit" (onSuccess)=onSuccess($event)></app-po-edit>
+     </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="confirm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center" style="padding-bottom: 40px;">
+        <h3>Are You sure</h3>
+        <div style="margin-top: 27px">
+          <button type="submit" class="btn btn-info btn-fill btn-wd" (click)="ChangePoStatus('action',orderSelected,statusSelected)">Ok</button>
+          <button data-dismiss="modal" type="button" class="btn btn-info btn-wd">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="addCl">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1> Add Client</h1>
+      </div>
+      <div class="modal-body">
+        <form  [formGroup]="clForm" (ngSubmit)="submitclForm(clForm.value)">
+          <div class="row">
+              <div class="col-md-4">
+                <div class="img_brow img-thumbnail" *ngIf="!showImageUploading2">
+                  <!-- {{ Url  }} -->
+                  <img *ngIf="clientPic2 != ''" [src]="Url+ 'api/assets/uploads/profilePic/' + clientPic" alt="" class="img-thumbnail">
+                  <img *ngIf="clientPic2 == ''" src="assets/img/demo.png" alt="" class="img-thumbnail">
+                  <div class="fafa_icon">
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                    <input #fileInput type="file" (change)="updateProfileimage($event)" accept="image/*" title=" " />
+                  </div>
+                </div>
+                <div class="img_brow img-thumbnail imageuploadingLoader" *ngIf="showImageUploading2">
+                  <img src="assets/img/loading.gif" alt="" class="img-thumbnail">
+                </div>
+              </div>
+            </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientFirstName'].valid   && clsubmitted}">
+                      <label>First Name</label>
+                      <input class="form-control border-input" placeholder="Company" type="text" [formControl]="clForm.controls['clientFirstName']">
+                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientLastName'].valid   && clsubmitted}">
+                      <label>Last Name</label>
+                      <input class="form-control border-input" placeholder="Last Name" type="text" [formControl]="clForm.controls['clientLastName']">
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientSalesname'].valid   && clsubmitted}">
+                      <label>Sales Name</label>
+                      <input class="form-control border-input" placeholder="Sales name" type="text" [formControl]="clForm.controls['clientSalesname']">
+                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                    <label>tag</label>
+                    Google  <input type="radio" formControlName="clientTag" name="clientTag" value="google" [(ngModel)]="clientTag">
+                    Alibaba <input type="radio" formControlName="clientTag" name="clientTag" value="alibaba" [(ngModel)]="clientTag">
+                </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-5">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientCompany'].valid   && clsubmitted}">
+                      <label>Company</label>
+                      <input class="form-control border-input"  placeholder="Company" type="text" [formControl]="clForm.controls['clientCompany']">
+                  </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientTelephone'].valid   && clsubmitted}">
+                      <label>Telephone number</label>
+                      <input class="form-control border-input" placeholder="Telephone number" type="text" [formControl]="clForm.controls['clientTelephone']">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientEmail'].valid   && clsubmitted}">
+                      <label for="exampleInputEmail1">Email address</label>
+                      <input class="form-control border-input" placeholder="Email" type="email" [formControl]="clForm.controls['clientEmail']">
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientBillingAddress'].valid   && clsubmitted}">
+                      <label>Billing Address</label>
+                      <input class="form-control border-input" placeholder="Billing Address" type="text" [formControl]="clForm.controls['clientBillingAddress']">
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-4">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientCity'].valid   && clsubmitted}">
+                      <label>City</label>
+                      <input class="form-control border-input" placeholder="City" type="text" [formControl]="clForm.controls['clientCity']">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientCountry'].valid   && clsubmitted}">
+                      <label>Country</label>
+                      <input class="form-control border-input" placeholder="Country" type="text" [formControl]="clForm.controls['clientCountry']">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group"  [ngClass]="{'has-error':!clForm.controls['clientPostal'].valid   && clsubmitted}">
+                      <label>Postal Code</label>
+                      <input class="form-control border-input" placeholder="ZIP Code" type="number" [formControl]="clForm.controls['clientPostal']">
+                  </div>
+              </div>
+          </div>
+          <button type="submit" name="button">Add Client </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

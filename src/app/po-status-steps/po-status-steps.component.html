@@ -1,0 +1,65 @@
+<ul class="my-activity-bar">
+
+  <li [class.active]="PurchaseOrderDetails.orderStatus >= 1 ">
+    <h5>
+      <span class="number">1</span>
+      <span class="icon">
+        <i class="fa fa-check" aria-hidden="true"></i>
+      </span>
+    </h5>
+    Start Project
+    <br>
+    <span *ngIf="(PurchaseOrderDetails | json ) != '{}'">{{ this.PurchaseOrderDetails['log'][1] }}</span>
+    <!-- <div class="line right">
+    </div> -->
+  </li>
+
+  <li [class.active]="PurchaseOrderDetails.orderStatus >= 2 ">
+    <h5><span class="number">2</span><span class="icon"><i class="fa fa-check" aria-hidden="true"></i></span></h5>Start Design
+    <br>
+    <span *ngIf="(PurchaseOrderDetails | json ) != '{}'">{{ this.PurchaseOrderDetails['log'][2] }}</span>
+    <!-- <div class="line left">
+    </div>
+    <div class="line right">
+    </div> -->
+  </li>
+  <li [class.active]="PurchaseOrderDetails.orderStatus >= 4 ">
+    <h5><span class="number">3</span><span class="icon"><i class="fa fa-check" aria-hidden="true"></i></span></h5>
+    Design Complete
+    <br>
+    <span *ngIf="(PurchaseOrderDetails | json ) != '{}'">{{ this.PurchaseOrderDetails['log'][4] }}</span>
+    <!-- <div class="line left">
+    </div>
+    <div class="line right">
+    </div> -->
+  </li>
+
+  <li [class.active]="PurchaseOrderDetails.orderStatus >= 7">
+    <h5><span class="number">4</span><span class="icon"><i class="fa fa-check" aria-hidden="true"></i></span></h5>Production Complete
+    <br>
+    <span *ngIf="(PurchaseOrderDetails | json ) != '{}'">{{ this.PurchaseOrderDetails['log'][7] }}</span>
+    <!-- <div class="line left">
+    </div>
+    <div class="line right">
+    </div> -->
+  </li>
+
+  <li [class.active]="PurchaseOrderDetails.orderStatus >= 10">
+    <h5><span class="number">5</span><span class="icon"><i class="fa fa-check" aria-hidden="true"></i></span></h5>Delivered
+    <br>
+    <span *ngIf="(PurchaseOrderDetails | json ) != '{}'">{{ this.PurchaseOrderDetails['log'][10] }} </span>
+    <!-- <div class="line left">
+    </div>
+    <div class="line right">
+    </div> -->
+  </li>
+
+  <li [class.active]="PurchaseOrderDetails.orderStatus >= 10">
+    <h5><span class="number">6</span><span class="icon"><i class="fa fa-check" aria-hidden="true"></i></span></h5>PO Complete
+    <br>
+    <span *ngIf="(PurchaseOrderDetails | json ) != '{}'">{{ this.PurchaseOrderDetails['log'][10] }} </span>
+    <!-- <div class="line left">
+    </div> -->
+  </li>
+
+</ul>

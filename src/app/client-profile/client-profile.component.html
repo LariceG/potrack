@@ -1,0 +1,136 @@
+<toaster-container></toaster-container>
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <div class="main-panel">
+      <app-navbar></app-navbar>
+
+        <div class="content">
+            <div class="container-fluid" style="padding:0px">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                          <div class="header">
+                              <h4 class="title">Client Info</h4>
+                          </div>
+                          <div class="content table-responsive table-full-width">
+                            <form  [formGroup]="poForm" (ngSubmit)="submitForm(poForm.value)">
+                              <div class="col-md-4">
+                                <div class="img_brow img-thumbnail" *ngIf="!showImageUploading">
+                                  <!-- {{ Url  }} -->
+                                  <img *ngIf="clientPic != ''" [src]="Url+ 'api/assets/uploads/profilePic/' + clientPic" alt="" class="img-thumbnail">
+                                  <img *ngIf="clientPic == ''" src="assets/img/demo.png" alt="" class="img-thumbnail">
+                                  <div class="fafa_icon">
+                                    <i class="fa fa-camera" aria-hidden="true"></i>
+                                    <input #fileInput type="file" (change)="updateProfileimage($event)" accept="image/*" title=" " />
+                                  </div>
+                                </div>
+                                <div class="img_brow img-thumbnail imageuploadingLoader" *ngIf="showImageUploading">
+                                  <img src="assets/img/loading.gif" alt="" class="img-thumbnail">
+                                </div>
+                              </div>
+                              <div class="clearfix">
+
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>First Name</label>
+                                  <input type="text" class="form-control border-input" [formControl]="poForm.controls['clientFirstName']" [(ngModel)]="Client.clientFirstName">
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Last Name</label>
+                                  <input type="text" class="form-control border-input" [formControl]="poForm.controls['clientLastName']" [(ngModel)]="Client.clientLastName">
+                                </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientSalesname'].valid   && poFormSubmitted}">
+                                      <label>Sales Name</label>
+                                      <input class="form-control border-input" placeholder="Sales name" type="text" [formControl]="poForm.controls['clientSalesname']" [(ngModel)]="Client.clientSalesname">
+                                  </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>tag</label>
+                                    <br>
+                                    Google  <input type="radio" formControlName="clientTag" name="clientTag" value="google" [(ngModel)]="Client.clientTag">
+                                    Alibaba <input type="radio" formControlName="clientTag" name="clientTag" value="alibaba" [(ngModel)]="Client.clientTag">
+                                </div>
+                              </div>
+                              <div class="clearfix">
+
+                              </div>
+
+                              <div class="">
+                                  <div class="col-md-5">
+                                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientCompany'].valid   && poFormSubmitted}">
+                                          <label>Company</label>
+                                          <input class="form-control border-input"  placeholder="Company" type="text" [formControl]="poForm.controls['clientCompany']"  [(ngModel)]="Client.clientCompany">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientTelephone'].valid   && poFormSubmitted}">
+                                          <label>Telephone number</label>
+                                          <input class="form-control border-input" placeholder="Telephone number" type="text" [formControl]="poForm.controls['clientTelephone']" [(ngModel)]="Client.clientTelephone">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientEmail'].valid   && poFormSubmitted}">
+                                          <label for="exampleInputEmail1">Email address</label>
+                                          <input class="form-control border-input" placeholder="Email" type="email" [formControl]="poForm.controls['clientEmail']" [(ngModel)]="Client.clientEmail">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="">
+                                  <div class="col-md-12">
+                                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientBillingAddress'].valid   && poFormSubmitted}">
+                                          <label>Billing Address</label>
+                                          <input class="form-control border-input" placeholder="Billing Address" type="text" [formControl]="poForm.controls['clientBillingAddress']" [(ngModel)]="Client.clientBillingAddress">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="">
+                                  <div class="col-md-4">
+                                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientCity'].valid   && poFormSubmitted}">
+                                          <label>City</label>
+                                          <input class="form-control border-input" placeholder="City" type="text" [formControl]="poForm.controls['clientCity']" [(ngModel)]="Client.clientCity">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientCountry'].valid   && poFormSubmitted}">
+                                          <label>Country</label>
+                                          <input class="form-control border-input" placeholder="Country" type="text" [formControl]="poForm.controls['clientCountry']" [(ngModel)]="Client.clientCountry">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group"  [ngClass]="{'has-error':!poForm.controls['clientPostal'].valid   && poFormSubmitted}">
+                                          <label>Postal Code</label>
+                                          <input class="form-control border-input" placeholder="ZIP Code" type="number" [formControl]="poForm.controls['clientPostal']" [(ngModel)]="Client.clientPostal">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                <button type="submit" name="button" class="btn btn-primary">Update</button>
+                              </div>
+
+                            </form>
+                            <div class="clearfix">
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

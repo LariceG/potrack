@@ -1,0 +1,94 @@
+<div class="wrapper">
+  <toaster-container></toaster-container>
+    <app-client-sidebar></app-client-sidebar>
+    <div class="main-panel">
+      <app-client-header></app-client-header>
+
+        <div class="content">
+          <div class="container-fluid" style="padding:0px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                          <div class="header">
+                              <h4 class="title">Purchase Orders</h4>
+                              <!-- <p class="category">Here is a subtitle for this table</p> -->
+                          </div>
+                          <div class="content table-responsive table-full-width">
+                              <table class="table table-striped">
+                                  <thead>
+                                    <th>PO ID</th>
+                                    <!-- <th>Client Name</th>
+                                    <th>Client Pic</th>
+                                    <th>Client Email</th> -->
+                                    <th>Due Date</th>
+                                    <th>Delivery Address</th>
+                                    <th>Order Status</th>
+                                    <!-- <th>Action</th> -->
+                                  </thead>
+                                  <tbody  *ngFor="let po of PurchaseOrders">
+                                    <tr>
+                                      <td>
+                                        <a [routerLink]="['/purchase-order-details',po.orderId]">
+                                          {{po.orderNumber}}
+                                        </a>
+                                      </td>
+                                      <!-- <td>
+                                        <img *ngIf="po.clientPic != ''" [src]="Url+ 'api/assets/uploads/profilePic/' + po.clientPic" alt="" style="width:60px" class="img-thumbnail">
+                                        <img *ngIf="po.clientPic == ''" [src]="'assets/img/demo.png'" alt="" style="width:60px" class="img-thumbnail">
+                                      </td>
+                                      <td>{{ po.clientFirstName }} {{ po.clientLastName }}</td>
+                                      <td>{{po.clientEmail}}</td> -->
+                                      <td>{{po.orderDueDate}}</td>
+                                      <td>{{po.orderDeliveryAddress}}</td>
+                                      <!-- <td>
+                                      </td> -->
+                                      <td>
+                                        <!-- {{ po.orderStatus }} -->
+                                        <button *ngIf="po.orderStatus <= 1" [attr.disabled]="true"  (click)="ChangePoStatus(po.orderId,1)" type="button" name="button" class="btn btn-primary btn-fill btn-wd">Design Pending </button>
+                                        <button *ngIf="po.orderStatus == 2" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Design In progress</button>
+                                        <button *ngIf="po.orderStatus == 3" (click)="ChangePoStatus(po.orderId,4,'confirm')" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Approve Design</button>
+                                        <button *ngIf="po.orderStatus == 4 || po.orderStatus == 5" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production Pending</button>
+                                        <button *ngIf="po.orderStatus == 6" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production In Progress</button>
+                                        <button *ngIf="po.orderStatus == 7" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production Completed</button>
+                                        <button *ngIf="po.orderStatus == 8" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Shipment pending</button>
+                                        <button *ngIf="po.orderStatus == 9" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order shipment Started</button>
+                                        <button *ngIf="po.orderStatus == 10" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order Delivered</button>
+                                      </td>
+                                      </tr>
+                                      <tr *ngIf="expandedPo != '' && expandedPo == po.orderId">
+                                        <td colspan="8">
+                                          <app-purchase-order-details-component [orderid]="po.orderId"></app-purchase-order-details-component>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="modal" id="confirm">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <h3>Are you sure</h3>
+        <div class="" style="padding-top: 30px;">
+          <button (click)="ChangePoStatus(poSelected,4,'action')" type="button" name="button" class="btn btn-primary" style="margin-right: 15px;">Yes</button>
+          <button data-dismiss="modal" type="button" name="button" class="btn btn-default">No</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

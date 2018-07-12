@@ -1,0 +1,510 @@
+<toaster-container></toaster-container>
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <div class="main-panel">
+      <app-navbar></app-navbar>
+
+        <div class="content">
+            <div class="container-fluid" style="padding:0px">
+                <div class="row">
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 1">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>PO Total</p>
+                                          {{DashbordInfo.total}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                    <a [routerLink]="['/purchase-orders','add']" class="pull-right">
+                                      Add new
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 1 || token.userType == 2">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>Under designing</p>
+                                          {{DashbordInfo.design}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 1 || token.userType == 3">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-3">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-9">
+                                      <div class="numbers">
+                                          <p>Under Production</p>
+                                          {{DashbordInfo.prod}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 1">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>Completed</p>
+                                          {{DashbordInfo.complete}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 2">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>Design pending</p>
+                                          {{DashbordInfo.designPending}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 2">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>Under review</p>
+                                          {{DashbordInfo.designSent}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 2">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>Approved</p>
+                                          {{DashbordInfo.designApproved}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 3">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>Pending</p>
+                                          {{DashbordInfo.productionPending}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 3">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-8">
+                                      <div class="numbers">
+                                          <p>Complete</p>
+                                          {{DashbordInfo.productionDone}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6" *ngIf="token.userType == 3">
+                      <div class="card">
+                          <div class="content">
+                              <div class="row">
+                                  <div class="col-xs-3">
+                                      <div class="icon-big icon-warning text-center">
+                                          <i class="ti-server"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-9">
+                                      <div class="numbers">
+                                          <p>Delivered</p>
+                                          {{DashbordInfo?.delivered}}
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="footer">
+                                  <hr />
+                                  <div class="stats" style="width: 100%">
+                                    <a routerLink="/purchase-orders">
+                                      <i class="ti-reload"></i> Check
+                                    </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                    <!-- <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-success text-center">
+                                            <i class="ti-wallet"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p>Revenue</p>
+                                            $1,345
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="ti-calendar"></i> Last day
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-danger text-center">
+                                            <i class="ti-pulse"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p>Errors</p>
+                                            23
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="ti-timer"></i> In the last hour
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="icon-big icon-info text-center">
+                                            <i class="ti-twitter-alt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="numbers">
+                                            <p>Followers</p>
+                                            +45
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer">
+                                    <hr />
+                                    <div class="stats">
+                                        <i class="ti-reload"></i> Updated now
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                          <div class="header">
+                              <h4 class="title">Purchase Orders</h4>
+                              <!-- <p class="category">Here is a subtitle for this table</p> -->
+                          </div>
+                          <div class="content table-responsive table-full-width">
+                              <table class="table table-striped">
+                                  <thead>
+                                    <th>PO ID</th>
+                                    <th>Client Name</th>
+                                    <th>Client Pic</th>
+                                    <th>Client Email</th>
+                                    <th>Due Date</th>
+                                    <th>Delivery Address</th>
+                                    <th>Sales Person</th>
+                                    <th>Order Status</th>
+                                    <th>Action</th>
+                                  </thead>
+                                  <tbody  *ngFor="let po of PurchaseOrdes">
+                                      <tr>
+                                        <td>
+                                          <a [routerLink]="['/purchase-order-details',po.orderId]">
+                                            {{po.orderNumber}}
+                                          </a>
+                                        </td>
+                                        <td>
+                                          <a [routerLink]="['/dashboard/client-profile',po.clientId]">
+                                          {{ po.clientFirstName }} {{ po.clientLastName }}
+                                          </a>
+                                        </td>
+                                        <td>
+                                          <img *ngIf="po.clientPic != ''" [src]="Url+ 'api/assets/uploads/profilePic/' + po.clientPic" alt="" style="width:60px" class="img-thumbnail">
+                                          <img *ngIf="po.clientPic == ''" [src]="'assets/img/demo.png'" alt="" style="width:60px" class="img-thumbnail">
+                                        </td>
+                                        <td>{{po.clientEmail}}</td>
+                                        <td>{{po.orderDueDate}}</td>
+                                        <td>{{po.orderDeliveryAddress}}</td>
+                                        <!-- <td>
+                                        </td> -->
+                                        <td>{{po.clientSalesname}}</td>
+                                        <td>
+                                          <!-- {{ po.orderStatus }} -->
+                                          <button *ngIf="po.orderStatus == 0 && token['userType'] == 1" (click)="ChangePoStatus('confirm',po.orderId,1)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Submit for Design </button>
+                                          <button *ngIf="po.orderStatus == 1 && token['userType'] == 1" [attr.disabled]="true"  (click)="ChangePoStatus('confirm',po.orderId,1)" type="button" name="button" class="btn btn-primary btn-fill btn-wd">Submitted for Design <i class="ti ti-check"></i> </button>
+                                          <button *ngIf="po.orderStatus == 2 && token['userType'] == 1" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Design In progress</button>
+                                          <button *ngIf="po.orderStatus == 3 && token['userType'] == 1" (click)="ChangePoStatus('confirm',po.orderId,4)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Design Done, Approve</button>
+                                          <button *ngIf="po.orderStatus == 4 && token['userType'] == 1" (click)="ChangePoStatus('confirm',po.orderId,5)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Submit for Production</button>
+                                          <button *ngIf="po.orderStatus == 5 && token['userType'] == 1" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Submitted for Production </button>
+                                          <button *ngIf="po.orderStatus == 6 && token['userType'] == 1" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production In Progress</button>
+                                          <button *ngIf="po.orderStatus == 7 && token['userType'] == 1"  (click)="ChangePoStatus('confirm',po.orderId,8)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Complete Payment</button>
+                                          <button *ngIf="po.orderStatus == 8 && token['userType'] == 1" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Shipment pending</button>
+                                          <button *ngIf="po.orderStatus == 9 && token['userType'] == 1" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order shipment Started</button>
+                                          <button *ngIf="po.orderStatus == 10 && token['userType'] == 1" [attr.disabled]="true"  type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order Delivered</button>
+
+                                          <button *ngIf="po.orderStatus == 1 && token['userType'] == 2" (click)="ChangePoStatus('confirm',po.orderId,2)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Start Design </button>
+                                          <button *ngIf="po.orderStatus == 2 && token['userType'] == 2" (click)="ChangePoStatus('confirm',po.orderId,3)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Send for review </button>
+                                          <button *ngIf="po.orderStatus == 3 && token['userType'] == 2" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd  btn-fill" style="width: 194px">Sent for review </button>
+                                          <button *ngIf="po.orderStatus >= 4 && token['userType'] == 2" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Approved </button>
+                                          <button *ngIf="po.orderStatus == 5 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,6)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Start Production</button>
+                                          <button *ngIf="po.orderStatus == 6 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,7)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production Complete</button>
+                                          <button *ngIf="po.orderStatus == 7 && token['userType'] == 3" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Production Completed</button>
+
+                                          <button *ngIf="po.orderStatus == 8 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,9)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Send for Shipment</button>
+                                          <button *ngIf="po.orderStatus == 9 && token['userType'] == 3" (click)="ChangePoStatus('confirm',po.orderId,10)" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Complete Shipment</button>
+                                          <button *ngIf="po.orderStatus == 10 && token['userType'] == 3" [attr.disabled]="true" type="button" name="button" class="btn btn-primary btn-wd" style="width: 194px">Order Delivered</button>
+
+                                        </td>
+                                        <td style="padding: 0px; width:100px">
+                                          <button type="button" name="button" class="btn btn-default" (click)="expandPO(po.orderId)" style="padding:0 !important; border:none">
+                                            <i  *ngIf="expandedPo != po.orderId" class="fa fa-angle-double-down" aria-hidden="true"></i>
+                                            <i  *ngIf="expandedPo != '' && expandedPo == po.orderId" class="fa fa-angle-double-up" aria-hidden="true"></i>
+                                          </button>
+                                          <button  *ngIf="token['userType'] == 1" type="button" name="button" class="btn btn-default" (click)="deletePoConfirm(po.orderId)"  style="padding:0 !important; border:none">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                          </button>
+                                          <button  *ngIf="token['userType'] == 1" type="button" name="button" class="btn btn-default" (click)="editPo(po.orderId)"  style="padding:0 !important; border:none">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                          </button>
+                                        </td>
+
+                                      </tr>
+                                      <tr *ngIf="expandedPo != '' && expandedPo == po.orderId">
+                                        <td colspan="8">
+                                          <app-purchase-order-details-component [orderid]="po.orderId"></app-purchase-order-details-component>
+                                        </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade delete-modal" role="dialog" id="podeletemodal">
+  <div class="modal-dialog modal-sm">
+    <!-- Modal content-->
+    <div class="modal-content">
+     <div class="modal-body">
+       <i class="fa fa-times"></i>
+       <h4>Are You sure to delete this order?</h4>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-primary"  (click) = "deletePo()" >Delete</button>
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" role="dialog" id="poeditmodal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div class="modal-body">
+        <app-po-edit *ngIf="poEdit" [poToEdit]="poToEdit" (onSuccess)=onSuccess($event)></app-po-edit>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+ <div class="modal" id="confirm">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-body text-center" style="padding-bottom: 40px;">
+         <h3>Are You sure</h3>
+         <div style="margin-top: 27px">
+           <button type="submit" class="btn btn-info btn-fill btn-wd" (click)="ChangePoStatus('action',orderSelected,statusSelected)">Ok</button>
+           <button data-dismiss="modal" type="button" class="btn btn-info btn-wd">Cancel</button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
